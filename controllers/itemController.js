@@ -31,8 +31,8 @@ const getAllItems = async (req, res) => {
         }
 
         // Return only the name and price if requested
-        // Example: GET /api/v1/items?fields=name,price
-        if (req.query.fields === "name,price") {
+        // Example: GET /api/v1/items?fields=summary
+        if (req.query.fields === "summary") {
             query = query.select("name price");
         } else {
             // return all fields and populate supplier -name, email, phone, excluding _id
