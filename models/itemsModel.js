@@ -1,6 +1,8 @@
 //import mongoose
 const mongoose = require("mongoose");
 
+const supplierObject = mongoose.Schema.Types.ObjectId;
+
 //create a schema for items
 const itemsSchema = new mongoose.Schema({
   name: {
