@@ -3,16 +3,33 @@ const express = require("express");
 const router = express.Router();
 
 //import item controller
-const { createItem,getAllItems,getItemById} = require("../controllers/itemController");
+const {createItem,getAllItems,getItemById,updateItem} = require("../controllers/itemController");
 
-//create new item
+/*
+POST localhost:3000/api/v1/items
+create new item
+*/
 router.post("/", createItem);
 
-//get all items
+/*
+GET localhost:3000/api/v1/items
+get all items
+*/
 router.get("/", getAllItems);
 
-//get a single item by ID
+/*
+GET localhost:3000/api/v1/items/:id
+get a single item by ID
+*/
 router.get("/:id", getItemById);
+
+/*
+
+PUT localhost:3000/api/v1/items/:id
+update an item by ID
+
+*/
+router.put("/:id", updateItem);
 
 //export the router
 module.exports = router;
