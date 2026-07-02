@@ -35,8 +35,8 @@ const getAllItems = async (req, res) => {
         if (req.query.fields === "name,price") {
             query = query.select("name price");
         } else {
-            // return all fields and populate supplier
-            query = query.populate("supplier");
+            // return all fields and populate supplier -name, email, phone, excluding _id
+            query = query.populate("supplier", "name email phone -_id");
         }
 
         // Execute the query
