@@ -3,22 +3,29 @@ const mongoose = require("mongoose");
 
 //create a schema for items
 const itemsSchema = new mongoose.Schema({
-
   name: {
     type: String,
     required: true,
     unique: true
   },
-  email: {
-    type: String,
+  category: {
+    type: String
   },
-    phone: {
-    type: String,
-    },
-    timestamp: {
-    required: true,
+  quantity: {
+    type: Number,
+    default: 0
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  supplier: {
+    type: supplierObject,
+    ref: 'Suppliers'
   }
-});
+
+}, {timestamps: true});
+
 
 //create a model for items
 const Items = mongoose.model("Items", itemsSchema);
