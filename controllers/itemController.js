@@ -29,9 +29,23 @@ const getAllItems = async (req, res) => {
 };
 
 
+//read a single item by its ID and populate the supplier information.
+const getItemById = async (req, res) => {
+    try{
+        const item = await Item.findById(req.params.id).populate('supplier');
+        if(!item){
+            return res.status(404).json({message: "Item not found"});
+        }
+        res.status(200).json(item);
+    }catch(error){
+        res.status(500).json({message: error.message})
+    };
+}
+
 //export the controller
 module.exports = {
     createItem,
-    getAllItems
+    getAllItems,
+    getItemById
 
 }
