@@ -18,23 +18,37 @@ const createItem = async (req, res) => {
     }
 };
 
-//read all items in the inventory and populate the supplier information for each item.
+// Read all items in the inventory and populate the supplier information for each item.
 const getAllItems = async (req, res) => {
-    try{
+    try {
 
-        const items = await Item.find().populate('supplier');
+        let query = Item.find();
 
-        //filter items by category if category query parameter is provided
-        //example: localhost:3000/api/v1/items?category=electronics will return all items in the electronics category
-        if(req.query.category){
-            const category = req.query.category.toLowerCase();
-            const filteredItems = items.filter(item => item.category.toLowerCase() === category);
-            return res.status(200).json(filteredItems);
+        // Filter items by category if category query parameter is provided
+        // Example: GET /api/v1/items?category=electronics
+        if (req.query.category) {
+            query = query.where("category").equals(req.query.category);
         }
+
+        // Return only the name and price if requested
+        // Example: GET /api/v1/items?fields=name,price
+        if (req.query.fields === "name,price") {
+            query = query.select("name price");
+        } else {
+            // return all fields and populate supplier
+            query = query.populate("supplier");
+        }
+
+        // Execute the query
+        const items = await query;
+
         res.status(200).json(items);
-    }catch(error){
-        res.status(500).json({message: error.message})
-    };
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
 };
 
 
@@ -48,7 +62,7 @@ const getItemById = async (req, res) => {
         res.status(200).json(item);
     }catch(error){
         res.status(500).json({message: error.message})
-    };
+    }
 }
 
 //Update an item given its ID
