@@ -40,8 +40,18 @@ const getAllItems = async (req, res) => {
         }
 
         // Execute the query
-        const items = await query;
+       let items = await query;
 
+       //Search items by name if search query parameter is provided
+       //Example: GET /api/v1/items?search=phone
+       if (req.query.search) {
+        //take the search query and convert it to lowercase for case-insensitive search
+        const search = req.query.search.toLowerCase();
+        //filter the items array to include only items whose name includes the search query
+        items = items.filter(item => item.name.toLowerCase().includes(search));
+       }
+
+       //return the items
         res.status(200).json(items);
 
     } catch (error) {
