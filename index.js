@@ -9,11 +9,13 @@ app.use(logger('dev'))
 
 //import routes
 const supplierRouter = require("./routes/supplierRouter");
+const itemRouter = require("./routes/itemRouter");
 
 
 
 //register API routes
 app.use("/api/v1/suppliers", supplierRouter);
+app.use("/api/v1/items", itemRouter);
 
 
 const PORT = 3000
