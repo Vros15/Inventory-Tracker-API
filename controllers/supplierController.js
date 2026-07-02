@@ -16,7 +16,19 @@ const createSupplier = async (req, res) => {
 
 };
 
+//Get all suppliers
+const getAllSuppliers = async (req, res) => {
+    try{
+        const suppliers = await Suppliers.find();
+        res.status(200).json(suppliers);
+    }
+    catch(error){
+        res.status(500).json({message: error.message})
+    };
+};
+
 //export the controller
 module.exports = {
-    createSupplier
+    createSupplier,
+    getAllSuppliers
 }
