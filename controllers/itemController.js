@@ -21,7 +21,16 @@ const createItem = async (req, res) => {
 //read all items in the inventory and populate the supplier information for each item.
 const getAllItems = async (req, res) => {
     try{
+
         const items = await Item.find().populate('supplier');
+
+        //filter items by category if category query parameter is provided
+        //example: localhost:3000/api/v1/items?category=electronics will return all items in the electronics category
+        if(req.query.category){
+            const category = req.query.category;
+            const filteredItems = items.filter(item => item.category === category);
+            return res.status(200).json(filteredItems);
+        }
         res.status(200).json(items);
     }catch(error){
         res.status(500).json({message: error.message})
