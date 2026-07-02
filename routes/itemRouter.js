@@ -3,4 +3,12 @@ const express = require("express");
 const router = express.Router();
 
 //import item controller
-const itemController = require("../controllers/itemController");
+const { createItem} = require("../controllers/itemController");
+
+//create new item
+router.post("/", createItem);
+
+
+
+//export the router
+module.exports = router;
