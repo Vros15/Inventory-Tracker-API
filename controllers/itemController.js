@@ -42,10 +42,24 @@ const getItemById = async (req, res) => {
     };
 }
 
+//Update an item given its ID
+const updateItem = async (req, res) => {
+    try{
+        //find the item by ID and update it with the new data from the request body, returning the updated item.
+        const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        if(!updatedItem){
+            return res.status(404).json({message: "Item not found"});
+        }
+        res.status(200).json(updatedItem);
+    }catch(error){
+        res.status(500).json({message: error.message})
+    };
+}
+
 //export the controller
 module.exports = {
     createItem,
     getAllItems,
-    getItemById
-
+    getItemById,
+    updateItem
 }
