@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 //import item controller
-const {createItem,getAllItems,getItemById,updateItem} = require("../controllers/itemController");
+const {createItem,getAllItems,getItemById,updateItem,deleteItem} = require("../controllers/itemController");
 
 /*
 POST localhost:3000/api/v1/items
@@ -30,6 +30,12 @@ update an item by ID
 
 */
 router.put("/:id", updateItem);
+
+/*
+DELETE localhost:3000/api/v1/items/:id
+delete an item by ID
+*/
+router.delete("/:id", deleteItem);
 
 //export the router
 module.exports = router;
