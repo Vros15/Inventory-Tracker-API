@@ -104,11 +104,26 @@ const deleteItem = async (req, res) => {
     };
 }
 
+//Get all items by a specific supplier ID and populate the supplier information for each item.
+const getItemsBySupplierId = async (req, res) => {
+    try{
+        const items = await Item.find({supplier: req.params.supplierId}).populate('supplier', 'name email phone -_id');
+
+        res.status(200).json({
+            message: "Items retrieved successfully",
+            items: items
+        });
+    }catch(error){
+        res.status(500).json({message: error.message})
+    }
+}
+
 //export the controller
 module.exports = {
     createItem,
     getAllItems,
     getItemById,
     updateItem,
-    deleteItem
+    deleteItem,
+    getItemsBySupplierId
 }
