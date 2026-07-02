@@ -56,10 +56,26 @@ const updateItem = async (req, res) => {
     };
 }
 
+//Delete an item given its ID.
+const deleteItem = async (req, res) => {
+    try{
+        //find the item by ID and delete it from database, returning the deleted item.
+        const deletedItem = await Item.findByIdAndDelete(req.params.id);
+        if(!deletedItem){
+            return res.status(404).json({message: "Item not found"});
+        }
+        //return a success message with the name of the deleted item
+        res.status(200).json({message: `Item ${deletedItem.name} has been deleted successfully`});
+    }catch(error){
+        res.status(500).json({message: error.message})
+    };
+}
+
 //export the controller
 module.exports = {
     createItem,
     getAllItems,
     getItemById,
-    updateItem
+    updateItem,
+    deleteItem
 }
