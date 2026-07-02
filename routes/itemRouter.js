@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 //import item controller
-const {createItem,getAllItems,getItemById,updateItem,deleteItem} = require("../controllers/itemController");
+const {createItem,getAllItems,getItemById,updateItem,deleteItem,getItemsBySupplierId} = require("../controllers/itemController");
 
 /*
 POST localhost:3000/api/v1/items
@@ -16,6 +16,11 @@ GET localhost:3000/api/v1/items
 get all items
 */
 router.get("/", getAllItems);
+/*
+GET localhost:3000/api/v1/items/supplier/:supplierId
+Get all items supplied by a specific supplier.
+*/
+router.get("/supplier/:supplierId", getItemsBySupplierId);
 
 /*
 GET localhost:3000/api/v1/items/:id
@@ -36,6 +41,7 @@ DELETE localhost:3000/api/v1/items/:id
 delete an item by ID
 */
 router.delete("/:id", deleteItem);
+
 
 //export the router
 module.exports = router;
